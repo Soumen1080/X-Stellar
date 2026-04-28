@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 32" width="180" height="32">
+  <!-- Icon -->
+  <rect x="0" y="2" width="28" height="28" rx="8" fill="#2DD4BF"/>
+  <path d="M16.5 6L10 17h5.5L11.5 26 18 15h-5.5L16.5 6z" fill="#0F0F14" stroke="#0F0F14" stroke-width="0.5" stroke-linejoin="round"/>
+  <!-- Text -->
+  <text x="36" y="22" font-family="system-ui, sans-serif" font-weight="800" font-size="16" fill="#0F0F14">X</text>
+  <text x="48" y="22" font-family="system-ui, sans-serif" font-weight="800" font-size="16" fill="#2DD4BF">-Stellar</text>
+</svg>

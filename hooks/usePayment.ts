@@ -28,7 +28,7 @@ interface UsePaymentReturn {
   status: PaymentStatus;
   txHash: string | null;
   error: string | null;
-  sendPayment: (params: SendPaymentParams) => Promise<void>;
+  sendPayment: (params: SendPaymentParams) => Promise<string | null>;
   reset: () => void;
 }
 
@@ -89,6 +89,8 @@ export function usePayment(): UsePaymentReturn {
           console.warn("Contract recording failed:", contractErr);
           setStatus("partial_success");
         }
+
+        return result.hash;
       } catch (err: any) {
         const message = err?.message ?? "Payment failed";
         setError(message);

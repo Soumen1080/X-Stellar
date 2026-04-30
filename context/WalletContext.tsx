@@ -14,6 +14,16 @@ import { getXLMBalance } from "@/lib/stellar/getBalance";
 
 const WalletContext = createContext<WalletContextType | null>(null);
 
+function syncPublicKeyCookie(publicKey: string | null) {
+  if (typeof document === "undefined") return;
+
+  if (publicKey) {
+    document.cookie = `stellar_star_public_key=${publicKey}; path=/; max-age=604800; SameSite=Lax`;
+  } else {
+    document.cookie = "stellar_star_public_key=; path=/; max-age=0";
+  }
+}
+
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
@@ -68,6 +78,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
           if (installed) {
             setPublicKey(savedKey);
             setSelectedWalletId("freighter");
+            syncPublicKeyCookie(savedKey);
             await Promise.all([fetchBalance(savedKey, true), hydrateNetwork()]);
           } else {
             // Freighter was uninstalled — clear saved state
@@ -111,6 +122,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
       setPublicKey(pk);
       setSelectedWalletId("freighter");
+      syncPublicKeyCookie(pk);
       if (typeof window !== "undefined") {
         localStorage.setItem(LS_PUBLIC_KEY, pk);
       }
@@ -134,6 +146,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setNetwork(null);
     setSelectedWalletId(null);
     setError(null);
+    syncPublicKeyCookie(null);
     if (typeof window !== "undefined") {
       localStorage.removeItem(LS_PUBLIC_KEY);
     }
